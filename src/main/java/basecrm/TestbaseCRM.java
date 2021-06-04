@@ -10,17 +10,26 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import utilitycrm.Testutilcrm;
 
 public class TestbaseCRM {
 	
-   public static  WebDriver driver;
-   public  static Properties prop;
-    public void Testbase() throws IOException {
+   public static WebDriver driver;
+   public static Properties prop;
+   
+   
+    public TestbaseCRM() {
     	
-    		prop= new Properties();
-    	FileInputStream ip = new FileInputStream("D:\\QA\\selenium_Workspace\\CRMmavenProject\\src\\main\\java\\propertiescrm\\config.properties");
-    	prop.load(ip);
+    	try {
+			prop = new Properties();
+			FileInputStream ip = new FileInputStream("D:/Practice_Manali/framework/framework/src/main/java/propertiescrm/config.properties");
+			prop.load(ip);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
   
     }
     	
@@ -29,13 +38,13 @@ public class TestbaseCRM {
 
     		if(browsername.equals("Firefox"))
     		{
-    		        System.setProperty("webdriver.gecko.driver", "D:\\QA\\seleniumjars\\geckodriver.exe");
+    		        WebDriverManager.firefoxdriver().setup();
     				driver=new FirefoxDriver();
     		}
     		
     		else
     		{
-    				System.setProperty("webdriver.chrome.driver", "D:\\QA\\seleniumjars\\chromedriver.exe");
+    			WebDriverManager.chromedriver().setup();
     				driver=new ChromeDriver();
     		}
     		driver.manage().window().maximize();
